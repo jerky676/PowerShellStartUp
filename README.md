@@ -1,0 +1,1 @@
+This is a simple PowerShell Module to Add/Remove/Get PS Scripts that start up via the Registry key.

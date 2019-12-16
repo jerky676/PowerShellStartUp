@@ -1,0 +1,10 @@
+version: 1.0.{Build}
+environment:
+  NugetAPIKey:
+    secure: CFshnX6P8eJYeRG6QjcVVDku87J8EpZdxJwrfTEcA27F6zXmlmXXlbx04oTLzPti
+build_script:
+- ps: ./build.ps1
+test_script:
+- ps: ./test.ps1
+deploy_script:
+- ps: ./deploy.ps1
