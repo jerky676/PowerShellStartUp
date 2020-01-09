@@ -6,7 +6,6 @@ if ($env:APPVEYOR_REPO_BRANCH -eq "Master"){
     #deploy 
 } else {
     #do not deploy
-    Invoke-GitVersions
     Write-host "Not deploying branch $env:APPVEYOR_REPO_BRANCH"
 }
 

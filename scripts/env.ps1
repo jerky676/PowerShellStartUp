@@ -5,5 +5,8 @@ $publish="$parent\publish"
 
 function Invoke-GitVersions(){
     GitVersion.exe /output buildserver
-    Write-host $env:MajorMinorPatch
+}
+
+function Tag-Version(){
+    git tag -msg $env:GitVersion_SemVer $env:GitVersion_Sha
 }
