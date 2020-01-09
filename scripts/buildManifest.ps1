@@ -2,8 +2,9 @@ param(
   [string]$Version = ''
 )
 
-$src="$PSScriptRoot\src"
-$publish="$PSScriptRoot\publish"
+. "$PSScriptRoot\env.ps1"
+
+
 $moduleName="PSStartUp"
 $manifestFileName="$publish\$moduleName.psd1"
 $guid="f221d635-8972-4c88-a916-00ca846f2057"
@@ -17,17 +18,19 @@ $projectUri = 'https://github.com/jerky676/PowerShellStartUp'
 $helpInfoUri = "https://github.com/jerky676/PowerShellStartUp/wiki"
 $ErrorActionPreference = 'Stop'
 
-if ($env:APPVEYOR_BUILD_VERSION) {
-  $Version = [regex]::match($env:APPVEYOR_BUILD_VERSION,'[0-9]+\.[0-9]+\.[0-9]+').Groups[0].Value
-  $lastPublishedVersion = [Version]::new((Find-Module -Name JournalCli | Select-Object -ExpandProperty Version))
-  if ([Version]::new($Version) -le $lastPublishedVersion) {
-    Write-Host "Last published version: 'v$lastPublishedVersion'. Current version: 'v$Version'"
-    throw "Version must be greater than the last published version, which is 'v$lastPublishedVersion'."
-  }
-  Write-Host "Last published version: 'v$lastPublishedVersion'. Current version: 'v$Version'"
-} elseif ($Version -eq '') {
-  throw "Missing version parameter"
-}
+# if ($env:APPVEYOR_BUILD_VERSION) {
+#     write-host $env:APPVEYOR_BUILD_VERSION
+#     $Version = [regex]::match($env:APPVEYOR_BUILD_VERSION,'[0-9]+\.[0-9]+\.[0-9]+').Groups[0].Value
+#     $lastPublishedVersion = [Version]::new((Find-Module -Name JournalCli | Select-Object -ExpandProperty Version))
+#     if ([Version]::new($Version) -le $lastPublishedVersion) {
+#         Write-Host "Last published version: 'v$lastPublishedVersion'. Current version: 'v$Version'"
+#         throw "Version must be greater than the last published version, which is 'v$lastPublishedVersion'."
+#     }
+#     Write-Host "Last published version: 'v$lastPublishedVersion'. Current version: 'v$Version'"
+# } elseif ($Version -eq '') {
+
+#   throw "Missing version parameter"
+# }
 
 
 if (Test-Path "$publish") {
@@ -38,7 +41,7 @@ Copy-Item -path "$src\" -Destination "$publish\" -Recurse
 
 
 $currentFunctions = Get-ChildItem function:
-$public = @( Get-ChildItem -Path "$PSScriptRoot\src\public\*.ps1" -Recurse )
+$public = @( Get-ChildItem -Path "$src\public\*.ps1" -Recurse )
 # dot source your script to load it to the current runspace
 
 Foreach($import in @($public))
@@ -54,7 +57,7 @@ Foreach($import in @($public))
 }
 
 $scriptFunctions = Get-ChildItem function: | Where-Object { $currentFunctions -notcontains $_ }
-$rootmodule=Get-ChildItem -Path "$PSScriptRoot\src\*.psm1"
+$rootmodule=Get-ChildItem -Path "$src\*.psm1"
 
 
 $newManifestArgs = @{
