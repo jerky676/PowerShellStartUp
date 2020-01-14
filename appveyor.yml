@@ -3,6 +3,12 @@ image: WMF 5
 environment:
   NugetAPIKey:
     secure: CFshnX6P8eJYeRG6QjcVVDku87J8EpZdxJwrfTEcA27F6zXmlmXXlbx04oTLzPti
+  GitHubAccessToken:
+    secure: gcYduA08ohLsmvbAhjoOzS+3XzHse4t1v7sZxoZ1uh1ltzLhJfPGZCzzl8DuKVwp
+  GitHubUserName:
+    secure: CJVWOQhi1y/1ul8A4kdSGQ==
+  GitHubEmail:
+    secure: aspEvCyms9DORDEvg7+lZHapL3mlhR9iB6HZMyiiwWE1k6ISPBciVYQFMergQFoO
 install:
 - ps: ./scripts/install.ps1
 build_script:
