@@ -17,11 +17,5 @@ test_script:
 - ps: ./scripts/test.ps1
 deploy_script:
 - ps: ./scripts/deploy.ps1
-notifications:
-  - provider: Slack
-    incoming_webhook: RyTQLUdYQDF2xrVLobZe9tdfTIijZmOEUOelCYgbQcwMsbS7jRrfydsL4a8din4Sxm34nT+Q9L8vytrFQ3GlQnJXniM76CCCwB1rhMnVoHY=
-    on_build_success: true
-    on_build_failure: true
-    on_build_status_changed: true
 on_success:
   - ps: ./scripts/onSuccess.ps1

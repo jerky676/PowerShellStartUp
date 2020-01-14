@@ -8,6 +8,7 @@ if ($env:APPVEYOR_REPO_BRANCH -eq "Master"){
     git config --global user.name "$env:GitHubUserName"
     GitVersion.exe /output buildserver
     git tag -msg $env:GitVersion_SemVer $env:GitVersion_Sha
+    git push
 } else {
     #do not deploy
     Write-host "Sucess non master branch $env:APPVEYOR_REPO_BRANCH"
