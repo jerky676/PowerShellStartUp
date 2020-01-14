@@ -6,6 +6,7 @@ if ($env:APPVEYOR_REPO_BRANCH -eq "Master"){
     Add-Content "$HOME\.git-credentials" "https://$($env:GitHubAccessToken):x-oauth-basic@github.com`n"
     git config --global user.email "$env:GitHubEmail"
     git config --global user.name "$env:GitHubUserName"
+    git config --global push.followTags true
     GitVersion.exe /output buildserver
     git tag -msg $env:GitVersion_SemVer $env:GitVersion_Sha
     git push
