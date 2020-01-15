@@ -6,14 +6,14 @@ function Add-StartUpScript([string]$filename,[string]$name,[switch]$force){
     $command="""Powershell.exe"" ""$filename"" --windowstyle hidden"
 
     if ($keyexists -and ! $force){
-        write-host "$name already exists use -force"
+        return "$name already exists use -force"
     } elseif ($keyexists -and $force){
         Remove-ItemProperty -Path "$registryPath" -Name $name
         New-ItemProperty -Path "$registryPath" -Name $name -Value $command
-        write-host "$name overwritten"
+        return "$name overwritten"
     } else {
         New-ItemProperty -Path "$registryPath" -Name $name -Value $command
-        write-host "$name created"
+        return "$name created"
     }
 }
 

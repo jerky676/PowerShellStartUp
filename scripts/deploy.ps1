@@ -2,7 +2,6 @@
 
 if ($env:APPVEYOR_REPO_BRANCH -eq "Master"){
     Write-Host "Deploying branch $env:APPVEYOR_REPO_BRANCH"
-} else {
-    #do not deploy
-    Write-host "Not deploying branch $env:APPVEYOR_REPO_BRANCH"
+    . "$parent\scripts\buildManifest.ps1" $env:GitVersion_SemVer
+    Publish-Module -NuGetApiKey $env:NugetAPIKey -Path "$publish"
 }

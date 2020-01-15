@@ -1,5 +1,7 @@
 . "$PSScriptRoot\env.ps1"
 
+$ErrorActionPreference = 'Stop'
+
 if ($env:APPVEYOR_REPO_BRANCH -eq "Master"){
     Write-host "Sucess branch $env:APPVEYOR_REPO_BRANCH"
     git config --global credential.helper store
@@ -7,10 +9,7 @@ if ($env:APPVEYOR_REPO_BRANCH -eq "Master"){
     git config --global user.email "$env:GitHubEmail"
     git config --global user.name "$env:GitHubUserName"
     git config --global push.followTags true
-    GitVersion.exe /output buildserver
     git tag -msg $env:GitVersion_SemVer $env:GitVersion_Sha
     git push
-} else {
-    #do not deploy
-    Write-host "Sucess non master branch $env:APPVEYOR_REPO_BRANCH"
+    Write-host "Deployed"
 }

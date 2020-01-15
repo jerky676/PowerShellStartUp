@@ -8,7 +8,7 @@ Try{
     Add-AppveyorTest -Name ManifestTest -Outcome Passed -Duration $duration.TotalMilliseconds
 }catch{
     $ErrorMessage = $_.Exception.Message
-    $FailedItem = 
+    $FailedItem = $_.Exception.ItemName
     Add-AppveyorTest -Name ManifestTest-Outcome Failed -ErrorMessage "$ErrorMessage" -ErrorStackTrace "$_.Exception.ErrorStackTrace"  -Duration $duration.TotalMilliseconds
     $exitCode=1
 }
