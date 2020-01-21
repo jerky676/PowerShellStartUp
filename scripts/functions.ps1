@@ -23,7 +23,7 @@ function Build-Manifest([string]$outDir,[string]$Version = ''){
 	}
 	
 	$scriptFunctions = Get-ChildItem function: | Where-Object { $currentFunctions -notcontains $_ }
-	$rootmodule=Get-ChildItem -Path "$src\*.psm1"
+	$rootmodule=$(Get-ChildItem -Path "$src\*.psm1").Name
 	
 	write-host "$outDir\$manifestFileName"
 
