@@ -1,3 +1,4 @@
+. "$((get-item $PSScriptRoot).parent.FullName)\scripts\env.ps1"
 . "$PSScriptRoot\common.tests.ps1"
 
 function Test-AddGetRemove(){
@@ -11,22 +12,22 @@ function Test-AddGetRemove(){
     Get-StartUpScripts | Out-Null
 }
 
-
 $exitCode=0
 
 Try{
-    Build-Manifest
-    Import-Module "$module" -Force
+    Build-Manifest 0.0.1
+    Import-Module "$moduleName" -Force
     $duration = $(Measure-Command { Test-AddGetRemove | out-null })
     Add-AppveyorTest -Name ModuleTest -Outcome Passed -Duration $duration.TotalMilliseconds
 } catch {
-    $ErrorMessage = $_.Exception.Message
-    $FailedItem = $_.Exception.ItemName
-    write-host "$ErrorMessage $FailedItem"
+    write-host "Caught an exception: $($_.Exception)" -ForegroundColor Red
+    $_
     Add-AppveyorTest -Name ModuleTest -Outcome Failed -ErrorMessage "$ErrorMessage" -ErrorStackTrace "$_.Exception.ErrorStackTrace"  -Duration $duration.TotalMilliseconds
     $exitCode=1
 }
 finally{
-    Remove-Module -Name "PSStartUp" | Out-Null
+    if (Get-Module -ListAvailable -Name "$modulename") {
+        Remove-Module -Name "$moduleName" | Out-Null
+    } 
     exit $exitCode
 }

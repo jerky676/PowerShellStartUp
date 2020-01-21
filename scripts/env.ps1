@@ -2,9 +2,12 @@
 $parent="$((get-item $PSScriptRoot).parent.FullName)"
 $tests="$parent\tests"
 $src="$parent\src"
+$scripts="$parent\scripts"
 $moduleName="PSStartUp"
-$publish="$parent\publish\$moduleName"
-$manifestFileName="$publish\$moduleName.psd1"
+$outdir="$parent\out"
+$testpublish="$outdir\test"
+$publish="$outdir\$moduleName"
+$manifestFileName="$moduleName.psd1"
 $module="$publish\PSStartUp.psm1"
 $guid="f221d635-8972-4c88-a916-00ca846f2057"
 $author="Justin Luther"
@@ -15,3 +18,6 @@ $tags=@("Start Up","Windows","Registry")
 $licenseUri = 'https://github.com/jerky676/PowerShellStartUp/blob/master/LICENSE.md'
 $projectUri = 'https://github.com/jerky676/PowerShellStartUp'
 $helpInfoUri = "https://github.com/jerky676/PowerShellStartUp/wiki"
+
+
+. "$scripts\functions.ps1"

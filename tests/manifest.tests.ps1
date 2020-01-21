@@ -1,17 +1,18 @@
+. "$((get-item $PSScriptRoot).parent.FullName)\scripts\env.ps1"
 . "$PSScriptRoot\common.tests.ps1"
 
 $exitCode=0
 
 Try{
-    Build-Manifest
-    $duration = $(Measure-Command { Test-ModuleManifest -path "$manifest" | out-null })
+    Build-Manifest "$testpublish" 0.0.1
+    $duration = $(Measure-Command { Test-ModuleManifest -path "$testpublish\$manifestfilename" | out-null })
     Add-AppveyorTest -Name ManifestTest -Outcome Passed -Duration $duration.TotalMilliseconds
 }catch{
-    $ErrorMessage = $_.Exception.Message
-    $FailedItem = $_.Exception.ItemName
-    Add-AppveyorTest -Name ManifestTest-Outcome Failed -ErrorMessage "$ErrorMessage" -ErrorStackTrace "$_.Exception.ErrorStackTrace"  -Duration $duration.TotalMilliseconds
+    $_
+    Add-AppveyorTest -Name ManifestTest-Outcome Failed -ErrorMessage "$_.Exception.Message" -ErrorStackTrace "$_.Exception.ErrorStackTrace"  -Duration $duration.TotalMilliseconds
     $exitCode=1
 }
 finally{
+    write-host "Completed"
     exit $exitCode
 }
