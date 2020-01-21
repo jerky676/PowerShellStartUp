@@ -15,7 +15,7 @@ function Test-AddGetRemove(){
 $exitCode=0
 
 Try{
-    Build-Manifest 0.0.1
+    Build-Manifest "$testpublish" 0.0.1
     Import-Module "$moduleName" -Force
     $duration = $(Measure-Command { Test-AddGetRemove | out-null })
     Add-AppveyorTest -Name ModuleTest -Outcome Passed -Duration $duration.TotalMilliseconds
