@@ -1,20 +1,11 @@
 $registryPath="Registry::HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run"
 
 function Add-StartUpScript([string]$filename,[string]$name,[switch]$force){   
-    $keyexists = $(Get-StartUpKeyExists -name $name)
-    $filename = $(Get-ResolvedPath $filename)
-    $command="""Powershell.exe"" ""$filename"" --windowstyle hidden"
+    Add-StartUp -name $name -command "$(Get-CommandFromScriptExt $(Get-ResolvedPath $filename))" -force $force
+}
 
-    if ($keyexists -and ! $force){
-        return "$name already exists use -force"
-    } elseif ($keyexists -and $force){
-        Remove-ItemProperty -Path "$registryPath" -Name $name
-        New-ItemProperty -Path "$registryPath" -Name $name -Value $command
-        return "$name overwritten"
-    } else {
-        New-ItemProperty -Path "$registryPath" -Name $name -Value $command
-        return "$name created"
-    }
+function Add-StartUpProgram([string]$filename,[string[]]$arguments,[switch]$force){
+    Add-StartUp -name $name -command "$filename $arguments" -force $force
 }
 
 function Remove-StartUpScript([string]$name){
@@ -27,15 +18,4 @@ function Get-StartUpScripts(){
 
 function Get-StartUpScript([string]$name){
     (Get-ItemProperty $registryPath).psobject.properties | where {$_.name -like "$name" -or $_.value -like "$name"} | Select name, value
-}
-
-function Get-StartUpKeyExists([string]$name){
-    if (Test-Path $registryPath){
-        $Key = Get-Item -LiteralPath $registryPath
-        if ($Key.GetValue($Name, $null) -ne $null) {
-            return $true
-        } else {
-            return $false
-        }
-    }
 }

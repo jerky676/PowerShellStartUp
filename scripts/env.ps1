@@ -2,6 +2,8 @@
 $parent="$((get-item $PSScriptRoot).parent.FullName)"
 $tests="$parent\tests"
 $src="$parent\src"
+$srcPublic="$src\public"
+$srcPrivate="$src\private"
 $scripts="$parent\scripts"
 $moduleName="PSStartUp"
 $outdir="$parent\out"

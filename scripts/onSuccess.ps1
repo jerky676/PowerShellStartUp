@@ -2,8 +2,10 @@
 
 $ErrorActionPreference = 'Stop'
 
-if ($env:APPVEYOR_REPO_BRANCH -eq "Master"){
-    Write-host "Sucess branch $env:APPVEYOR_REPO_BRANCH"
+# add semver check
+
+if ($env:APPVEYOR_REPO_BRANCH -eq "Master" -and $env:APPVEYOR_PULL_REQUEST_NUMBER -eq $NULL ){
+    Write-host "Deploying branch $env:APPVEYOR_REPO_BRANCH"
     git config --global credential.helper store
     Add-Content "$HOME\.git-credentials" "https://$($env:GitHubAccessToken):x-oauth-basic@github.com`n"
     git config --global user.email "$env:GitHubEmail"

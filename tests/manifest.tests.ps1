@@ -1,5 +1,4 @@
 . "$((get-item $PSScriptRoot).parent.FullName)\scripts\env.ps1"
-. "$PSScriptRoot\common.tests.ps1"
 
 $exitCode=0
 
