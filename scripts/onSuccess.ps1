@@ -1,8 +1,9 @@
 . "$PSScriptRoot\env.ps1"
 
-$ErrorActionPreference = 'Stop'
 
 # add semver check
+
+write-host "branch: $env:APPVEYOR_REPO_BRANCH pull request number $env:APPVEYOR_PULL_REQUEST_NUMBER"
 
 if ($env:APPVEYOR_REPO_BRANCH -eq "Master" -and $env:APPVEYOR_PULL_REQUEST_NUMBER -eq $NULL ){
     Write-host "Deploying branch $env:APPVEYOR_REPO_BRANCH"
