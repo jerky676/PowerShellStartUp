@@ -13,6 +13,6 @@ if ($env:APPVEYOR_REPO_BRANCH -eq "Master" -and $env:APPVEYOR_PULL_REQUEST_NUMBE
     git config --global user.name "$env:GitHubUserName"
     git config --global push.followTags true
     git tag -msg $env:GitVersion_SemVer $env:GitVersion_Sha
-    # git push
+    git push origin --tags
     Write-host "Deployed"
 }
