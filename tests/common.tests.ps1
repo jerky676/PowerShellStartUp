@@ -17,13 +17,13 @@ Try{
     $duration = $(Measure-Command { Test-CommonFunctions | out-null })
 
     if ($env:APPVEYOR){
-        Add-AppveyorTest -Name ModuleTest -Outcome Passed -Duration $duration.TotalMilliseconds
+        Add-AppveyorTest -Name CommonTest -Outcome Passed -Duration $duration.TotalMilliseconds
     }    
 } catch {
     write-host "Caught an exception: $($_.Exception)" -ForegroundColor Red
     $_
     if ($env:APPVEYOR){
-        Add-AppveyorTest -Name ModuleTest -Outcome Failed -ErrorMessage "$ErrorMessage" -ErrorStackTrace "$_.Exception.ErrorStackTrace"  -Duration $duration.TotalMilliseconds
+        Add-AppveyorTest -Name CommonTest -Outcome Failed -ErrorMessage "$ErrorMessage" -ErrorStackTrace "$_.Exception.ErrorStackTrace"  -Duration $duration.TotalMilliseconds
     }
     $exitCode=1
 }
