@@ -4,7 +4,7 @@ function Add-StartUpScript([string]$filename,[string]$name,[switch]$force){
     Add-StartUp -name $name -command "$(Get-CommandFromScriptExt $(Get-ResolvedPath $filename))" -force $force
 }
 
-function Add-StartUpProgram([string]$filename,[string[]]$arguments,[switch]$force){
+function Add-StartUpProgram([string]$filename,[string]$name,[string[]]$arguments,[switch]$force){
     Add-StartUp -name $name -command "$filename $arguments" -force $force
 }
 
